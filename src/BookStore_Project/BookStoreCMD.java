@@ -195,6 +195,7 @@ public class BookStoreCMD {
                             buy_books[i] = (Book) bookal.get(i);
                         }
                         buy(buy_books);
+                        bi.updateBooks(bimp.updatedbook);
                         bookal.clear();
 
                     } else {
@@ -230,8 +231,8 @@ public class BookStoreCMD {
 
                     Book[] temp = books;
                     books = new Book[temp.length + 1];
-                    for(int i=0;i<temp.length;i++){
-                        books[i]=temp[i];
+                    for (int i = 0; i < temp.length; i++) {
+                        books[i] = temp[i];
                     }
                     books[books.length - 1] = newbook;
                     bi.updateBooks(books);

@@ -7,6 +7,7 @@ package BookStore_Project;
 import java.util.Scanner;
 import java.io.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 public class BookInfo {
 
@@ -27,9 +28,8 @@ public class BookInfo {
 
     public static Book[] getBookInfo() throws FileNotFoundException {
         int count = 0;
-        final int SIZE = 7;
 
-        Book[] books = new Book[SIZE];
+        ArrayList<Book> tempbooks = new ArrayList<Book>();
 
         Book book;
 
@@ -37,7 +37,7 @@ public class BookInfo {
         //File myFile = new File("C:\\Users\\ding\\Documents\\NetBeansProjects\\BookStore_Project\\src\\BookStore_Project\\BookPrices.txt");
         Scanner inputFile = new Scanner(myFile);
 
-        while (inputFile.hasNext() && count < books.length) {
+        while (inputFile.hasNext()) {
             String str;
 
             str = inputFile.nextLine();
@@ -53,11 +53,17 @@ public class BookInfo {
             }
 
             book.setStock(Integer.parseInt(parts[3]));
-            books[count] = book;
+            tempbooks.add(book);
             book = null;
             count++;
         }
         inputFile.close();
+
+        int SIZE = tempbooks.size();
+        Book[] books = new Book[SIZE];
+        for (int i = 0; i < tempbooks.size(); i++) {
+            books[i] = tempbooks.get(i);
+        }
 
         return books;
 

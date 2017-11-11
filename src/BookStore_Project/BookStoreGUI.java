@@ -19,6 +19,8 @@ import javax.swing.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import BookStore_Project.Book;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -45,8 +47,8 @@ public class BookStoreGUI extends JFrame {
     private JButton showAllButton;		//shows all books available
 
     private BookInfo booksInfo = new BookInfo(); 			//BookInfo object
-    private  Book[] bookList = booksInfo.getBookInfo();	//Array that Holds all book names
-    private BookListImp bookimp= new BookListImp(bookList);
+    private Book[] bookList = booksInfo.getBookInfo();	//Array that Holds all book names
+    private BookListImp bookimp = new BookListImp(bookList);
     private int[] bookStock = bookimp.getBookStock();//Array that holds all book prices
 
     private JScrollPane scrollPane1;	//Holds available books list
@@ -222,7 +224,7 @@ public class BookStoreGUI extends JFrame {
 
         String[] bookTittles = new String[bookList.length];
         for (int i = 0; i < bookList.length; i++) {
-            bookTittles[i] = i+"# <<"+bookList[i].getTitle()+">> "+" Author  "+bookList[i].getAuthor()+"  Price "+bookList[i].getPrice();
+            bookTittles[i] = "Number:" + i + ":" + "Tittle:" + bookList[i].getTitle() + "Author:" + bookList[i].getAuthor() + "Price:" + bookList[i].getPrice() + "Stock:" + bookList[i].getStock();
         }
         return bookTittles;
     }
@@ -294,9 +296,9 @@ public class BookStoreGUI extends JFrame {
                 shoppingCartDFM.addElement(selectedBookName);
                 selectedList.setModel(shoppingCartDFM);
 
-         } else {
-                 JOptionPane.showMessageDialog(null, "Sorry,The book you select is out of stock!" );
-         }
+            } else {
+                JOptionPane.showMessageDialog(null, "Sorry,The book you select is out of stock!");
+            }
 
         }
 
@@ -311,7 +313,7 @@ public class BookStoreGUI extends JFrame {
 
             index = selectedList.getSelectedIndex();
             ((DefaultListModel) selectedList.getModel()).remove(index);
-            bookStock[selectedIndex]=bookStock[selectedIndex]+1;
+            bookStock[selectedIndex] = bookStock[selectedIndex] + 1;
 
             if (element == -1) {
                 if (bookPrice.compareTo(bookList[selectedIndex].getPrice()) >= 0) {
@@ -324,8 +326,7 @@ public class BookStoreGUI extends JFrame {
             } else {
                 bookPrice = bookList[index].getPrice().subtract(bookPrice);
             }
-            
-            
+
         }
     }
 
@@ -338,23 +339,32 @@ public class BookStoreGUI extends JFrame {
 
             money = new DecimalFormat("#,##0.00");
             total = bookPrice;
-            
-//            ArrayList<Book> bl= new ArrayList<Book>();
-//            Book book=null;
-//            for(int i=0;i<shoppingCartDFM.getSize();i++){
-//                
-//                System.out.println(shoppingCartDFM.get(0).toString().split("#")[0]);
-//                int index=Integer.parseInt(shoppingCartDFM.get(0).toString().split("#")[0]);
-//                book=bookList[index];
-//                bl.add(book);
-//                
-//            }
- //           int [] result =imp.buy((Book [] )bl.toArray());
- 
 
+            ArrayList<Book> bl = new ArrayList<Book>();
+            Book book = null;
+            for (int i = 0; i < shoppingCartDFM.getSize(); i++) {
 
-            JOptionPane.showMessageDialog(null, "Subtotal: $" + (money.format(bookPrice)) + "\n"
-                    + "Total: $" + (money.format(total)));
+                System.out.println(shoppingCartDFM.get(i).toString().split(":")[1]);
+                String book_index = shoppingCartDFM.get(i).toString().split(":")[1];
+                int index = Integer.parseInt(book_index);
+                //int index=Integer.parseInt(shoppingCartDFM.get(0).toString().split("#")[0]);
+                book = bookList[index];
+                bl.add(book);
+
+            }
+
+            Book[] buy_book = new Book[bl.size()];
+            for (int i = 0; i < bl.size(); i++) {
+                buy_book[i] = bl.get(i);
+            }
+            int[] result = imp.buy(buy_book);
+            try {
+                BookInfo.updateBooks(imp.updatedbook);
+            } catch (IOException ex) {
+                Logger.getLogger(BookStoreGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            JOptionPane.showMessageDialog(null, "Total: $" + (money.format(total)));
         }
     }
 
@@ -364,30 +374,29 @@ public class BookStoreGUI extends JFrame {
     public class SearchButtonListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-             
-            ArrayList<Integer> al= new ArrayList();
+
+            ArrayList<Integer> al = new ArrayList();
             index = 0;
 
-            while ( index < bookList.length) {
+            while (index < bookList.length) {
                 if (bookList[index].getAuthor().equals(searchField.getText()) || bookList[index].getTitle().equals(searchField.getText())) {
-                    System.out.println("Price"+bookList[index].getPrice());
+                    System.out.println("Price" + bookList[index].getPrice());
                     element = index;
                     al.add(index);
                 }
                 index++;
             }
-             booksList.setModel(new DefaultListModel());
-          for(int i=0;i<al.size();i++){
-            if (element == -1) {
-                booksList.setModel(new DefaultListModel());
-                ((DefaultListModel) booksList.getModel()).addElement(notFound);
-            } else {
-                searchResults = bookList[al.get(i)].getTitle()+"  "+bookList[al.get(i)].getAuthor()+"  "+bookList[al.get(i)].getPrice();
-                
+            booksList.setModel(new DefaultListModel());
+            for (int i = 0; i < al.size(); i++) {
+                if (element == -1) {
+                    booksList.setModel(new DefaultListModel());
+                    ((DefaultListModel) booksList.getModel()).addElement(notFound);
+                } else {
+                    searchResults = bookList[al.get(i)].getTitle() + "  " + bookList[al.get(i)].getAuthor() + "  " + bookList[al.get(i)].getPrice();
 
-                ((DefaultListModel) booksList.getModel()).addElement(searchResults);
+                    ((DefaultListModel) booksList.getModel()).addElement(searchResults);
+                }
             }
-        }
         }
     }
 
