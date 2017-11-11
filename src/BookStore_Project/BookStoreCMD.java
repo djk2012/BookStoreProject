@@ -155,7 +155,7 @@ public class BookStoreCMD {
                         //  System.out.println(bookList[add_number].getTitle());
                         addBook(books[add_number], add_quantity);
                         //System.out.println("before"+books.length+" "+add_number+" "+add_quantity);
-                        bi.updateBookStock(books);
+                        bi.updateBooks(books);
                     } else {
                         System.out.println("Sorry, the quantity must be bigger than 0");
                         System.out.println("The quantity has not been added into stock");
@@ -169,7 +169,7 @@ public class BookStoreCMD {
                     int remove_quantity = scan.nextInt();
                     if (remove_quantity > 0) {
                         removeBook(books[remove_number], remove_quantity);
-                        bi.updateBookStock(books);
+                        bi.updateBooks(books);
                     } else {
                         System.out.println("Sorry, the quantity must be bigger than 0");
                         System.out.println("The quantity has not been added into stock");
@@ -234,7 +234,7 @@ public class BookStoreCMD {
                         books[i]=temp[i];
                     }
                     books[books.length - 1] = newbook;
-                    bi.updateBookStock(books);
+                    bi.updateBooks(books);
 
                     break;
                 case 7:
