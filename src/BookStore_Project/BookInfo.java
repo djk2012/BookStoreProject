@@ -15,6 +15,7 @@ public class BookInfo {
             out.println(book[count].getTitle() + ";" + book[count].getAuthor() + ";" + book[count].getPrice() + ";" + book[count].getStock());
             count++;
         }
+        
         out.close();
     }
 

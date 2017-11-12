@@ -15,6 +15,7 @@ import java.util.ArrayList;
  *
  * @author ding
  */
+
 public class BookListImp implements BookList {
 
     private Book[] booklist;

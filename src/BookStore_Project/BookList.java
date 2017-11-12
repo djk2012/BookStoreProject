@@ -16,4 +16,5 @@ public interface BookList {
     public boolean add(Book book, int quantity);
 
     public int[] buy(Book... books);
+    
 }
