@@ -23,16 +23,21 @@ import static org.junit.Assert.*;
 public class Bookstoretest {
 
     @Test
-    public void check_book() throws FileNotFoundException {
+    public void check_Booklist_NotNull() throws FileNotFoundException {
         Book[] booklist = BookInfo.getBookInfo();
-
         Assert.assertNotNull(booklist);
 
     }
+    
+     @Test
+    public void check_book() throws FileNotFoundException {
+        Book[] booklist = BookInfo.getBookInfo();
+        BookListImp bimp=new BookListImp(booklist);
+        String searchtittle="Desired";
+        Book [] result = bimp.list(searchtittle);
+        String resulttittle=result[result.length-1].getTitle();
+        Assert.assertEquals(searchtittle, resulttittle);
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    }
+    
 }

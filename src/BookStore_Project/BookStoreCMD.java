@@ -1,9 +1,9 @@
+package BookStore_Project;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package BookStore_Project;
 
 import BookStore_Project.BookInfo;
 import java.io.FileNotFoundException;
@@ -23,49 +23,36 @@ public class BookStoreCMD {
     static BookListImp bimp;
     static Book[] books;
     static int[] stock;
+    static Book[] bookList;
 
     public BookStoreCMD() {
         bi = new BookInfo();
-
     }
-
-    //BookInfo object
-    private static Book[] bookList;
 
     public static void initBookInfo() throws FileNotFoundException {
         books = bi.getBookInfo();
-        System.out.println("sfdfsaff" + books.length);
-
     }
 
     public static void showBookInfo() {
-
-        //System.out.println("    Book Number    |             Book Tittle               |               Book Auhtor               |             Book  Price               |");
         for (int i = 0; i < books.length; i++) {
             System.out.println("----------------------------------------------");
-            System.out.println(" Book number    " + i);
-            System.out.println(" Book Tittle    " + books[i].getTitle());
-            System.out.println(" Book Author    " + books[i].getAuthor());
-            System.out.println(" Book Price    " + books[i].getPrice());
-            System.out.println(" Book Stock    " + books[i].getStock());
-
+            System.out.println(" Book number：" + i);
+            System.out.println(" Book Tittle：" + books[i].getTitle());
+            System.out.println(" Book Author:" + books[i].getAuthor());
+            System.out.println(" Book Price:" + books[i].getPrice());
+            System.out.println(" Book Stock:" + books[i].getStock());
         }
-
     }
 
     public static void showSearchBookInfo(Book[] books) {
-
-        //System.out.println("    Book Number    |             Book Tittle               |               Book Auhtor               |             Book  Price               |");
         for (int i = 0; i < books.length; i++) {
             System.out.println("----------------------------------------------");
-            System.out.println(" Book number    " + i);
-            System.out.println(" Book Tittle    " + books[i].getTitle());
-            System.out.println(" Book Author    " + books[i].getAuthor());
-            System.out.println(" Book Price    " + books[i].getPrice());
-            System.out.println(" Book Stock    " + books[i].getStock());
-
+            System.out.println(" Book number：" + i);
+            System.out.println(" Book Tittle：" + books[i].getTitle());
+            System.out.println(" Book Author：" + books[i].getAuthor());
+            System.out.println(" Book Price：" + books[i].getPrice());
+            System.out.println(" Book Stock：" + books[i].getStock());
         }
-
     }
 
     public static void printMenu() {
@@ -83,20 +70,13 @@ public class BookStoreCMD {
     }
 
     public static void addBook(Book book, int quantity) {
-        System.out.println("----------0----");
         bimp = new BookListImp(books);
-
-        System.out.println("---------1-----" + book.getTitle());
         boolean add = bimp.add(book, quantity);
-        System.out.println("----------2----");
-
         if (add == true) {
             System.out.println("The books have been sucessfully added!");
         } else {
             System.out.println("Sorry,The books have not been added!");
-
         }
-
     }
 
     public static void removeBook(Book book, int quantity) {
@@ -107,7 +87,6 @@ public class BookStoreCMD {
         } else {
             System.out.println("Sorry,The books have not been removed!");
         }
-
     }
 
     public static int[] buy(Book... books) {
@@ -130,14 +109,13 @@ public class BookStoreCMD {
         List list = new ArrayList();
         Scanner scan = new Scanner(System.in);
         initBookInfo();
-
         int menu = 1;
         boolean start = true;
+
         while (start) {
             printMenu();
             System.out.println("Please enter your choice: ");
             menu = scan.nextInt();
-
             switch (menu) {
 
                 case 1:
@@ -149,12 +127,9 @@ public class BookStoreCMD {
                     int add_number = scan.nextInt();
                     System.out.println("Please enter quantity of book you want to add");
                     int add_quantity = scan.nextInt();
-
                     if (add_quantity > 0) {
                         System.out.println(books.length + "  " + add_number + " " + add_quantity);
-                        //  System.out.println(bookList[add_number].getTitle());
                         addBook(books[add_number], add_quantity);
-                        //System.out.println("before"+books.length+" "+add_number+" "+add_quantity);
                         bi.updateBooks(books);
                     } else {
                         System.out.println("Sorry, the quantity must be bigger than 0");
@@ -177,47 +152,38 @@ public class BookStoreCMD {
                     break;
                 case 4:
                     showBookInfo();
-
                     System.out.println("Please enter number of book you want to buy");
                     int book_number = scan.nextInt();
                     System.out.println("Please enter quantity of book you want to buy");
                     int book_quantity = scan.nextInt();
                     if (books[book_number].getStock() >= book_quantity && book_quantity > 0) {
-
                         for (int i = 0; i < book_quantity; i++) {
                             bookal.add(books[book_number]);
-
                         }
-
                         Book[] buy_books = new Book[bookal.size()];
                         for (int i = 0; i < bookal.size(); i++) {
-
                             buy_books[i] = (Book) bookal.get(i);
                         }
                         buy(buy_books);
                         bi.updateBooks(bimp.updatedbook);
                         bookal.clear();
-
                     } else {
                         System.out.println("Sorry,out of the stock about this book");
-
                     }
-
                     break;
-                case 5:
+                case 5:          
                     showBookInfo();
                     System.out.println("Please enter tittle or author of book you want to search");
                     String searchstring = scan.next();
                     Book[] search_book = search(searchstring);
                     System.out.println("search number" + search_book.length);
                     showSearchBookInfo(search_book);
-
                     break;
                 case 6:
                     System.out.println("Please enter new book's tittle");
-                    String tittle = scan.next();
+                    String tittle = scan.nextLine();
                     System.out.println("Please enter new book's auther");
-                    String author = scan.next();
+                    String author = scan.nextLine();
                     System.out.println("Please enter new book's price");
                     String input = scan.next();
                     BigDecimal price = new BigDecimal(input);
@@ -228,7 +194,6 @@ public class BookStoreCMD {
                     newbook.setAuthor(author);
                     newbook.setPrice(price);
                     newbook.setStock(stock);
-
                     Book[] temp = books;
                     books = new Book[temp.length + 1];
                     for (int i = 0; i < temp.length; i++) {
@@ -236,7 +201,6 @@ public class BookStoreCMD {
                     }
                     books[books.length - 1] = newbook;
                     bi.updateBooks(books);
-
                     break;
                 case 7:
                     System.out.println();
@@ -245,7 +209,6 @@ public class BookStoreCMD {
                 default:
                     System.out.println();
                     break;
-
             }
         }
 

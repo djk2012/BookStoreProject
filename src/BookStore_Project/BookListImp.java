@@ -36,10 +36,8 @@ public class BookListImp implements BookList {
         for (int i = 0; i < this.booklist.length; i++) {
             if (booklist[i].getTitle().contains(searchString) || booklist[i].getAuthor().contains(searchString)) {
                 resultlist.add(booklist[i]);
-                System.out.println(booklist[i].getTitle() + "     " + booklist[i].getAuthor());
             }
         }
-
         Book[] list = new Book[resultlist.size()];
         for (int i = 0; i < resultlist.size(); i++) {
             list[i] = (Book) resultlist.get(i);
@@ -70,7 +68,6 @@ public class BookListImp implements BookList {
                     booklist[buy_index].setStock(booklist[buy_index].getStock() - 1);
                     price = price.add(books[i].getPrice());
                     System.out.println("Tittle: " + booklist[buy_index].getTitle() + "  Author: " + booklist[buy_index].getAuthor() + "  Price: " + booklist[buy_index].getPrice());
-
                     result.add(OK);
                 } else {
                     result.add(NOT_IN_STOCK);
@@ -86,7 +83,6 @@ public class BookListImp implements BookList {
         for (int i = 0; i < result.size(); i++) {
             reult_arr[i] = result.get(i);
         }
-
         return reult_arr;
     }
 
@@ -102,7 +98,6 @@ public class BookListImp implements BookList {
     }
 
     public Boolean check_book_exist(Book book) {
-
         for (int i = 0; i < this.booklist.length; i++) {
             if (booklist[i].getTitle().equals(book.getTitle()) && booklist[i].getAuthor().equals(book.getAuthor()) && booklist[i].getPrice().equals(book.getPrice())) {
                 return true;
@@ -112,7 +107,6 @@ public class BookListImp implements BookList {
     }
 
     public int check_book_in_stock(Book book) {
-
         for (int i = 0; i < this.booklist.length; i++) {
             if (booklist[i].getTitle().equals(book.getTitle()) && booklist[i].getAuthor().equals(book.getAuthor()) && booklist[i].getPrice().equals(book.getPrice())) {
                 if (booklist[i].getStock() - 1 >= 0) {
@@ -126,7 +120,6 @@ public class BookListImp implements BookList {
     }
 
     public int[] getBookStock() {
-
         int[] bookStock = new int[this.booklist.length];
         for (int i = 0; i < this.booklist.length; i++) {
             bookStock[i] = this.booklist[i].getStock();
