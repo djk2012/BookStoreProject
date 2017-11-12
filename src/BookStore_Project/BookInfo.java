@@ -23,7 +23,6 @@ public class BookInfo {
         ArrayList<Book> tempbooks = new ArrayList<Book>();
         Book book;
         File myFile = new File("./src/BookStore_Project/BookPrices.txt");
-        //File myFile = new File("C:\\Users\\ding\\Documents\\NetBeansProjects\\BookStore_Project\\src\\BookStore_Project\\BookPrices.txt");
         Scanner inputFile = new Scanner(myFile);
         while (inputFile.hasNext()) {
             String str;
