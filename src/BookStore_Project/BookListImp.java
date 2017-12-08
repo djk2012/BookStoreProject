@@ -43,8 +43,10 @@ public class BookListImp implements BookList {
         for (int i = 0; i < resultlist.size(); i++) {
             list[i] = (Book) resultlist.get(i);
         }
+        
         return list;
     }
+    
 
     @Override
     public boolean add(Book book, int quantity) {
@@ -54,6 +56,7 @@ public class BookListImp implements BookList {
                 return true;
             }
         }
+        
         return false;
     }
 

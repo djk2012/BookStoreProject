@@ -17,4 +17,5 @@ public interface BookList {
 
     public int[] buy(Book... books);
     
+    
 }

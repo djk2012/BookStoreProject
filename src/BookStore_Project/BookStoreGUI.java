@@ -293,9 +293,6 @@ public class BookStoreGUI extends JFrame {
            
         public void actionPerformed(ActionEvent e) {
 
-            //selectedList.removeAll();
-          //  index = selectedList.getSelectedIndex();
-          // (
           bookPrice = new BigDecimal(0.00);
           total=new BigDecimal(0.00);
             booksList.setModel(new DefaultListModel());
