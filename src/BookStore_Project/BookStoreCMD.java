@@ -89,7 +89,7 @@ public class BookStoreCMD {
         }
     }
 
-    public static int[] buy(Book... books) {
+    public static  int[] buy(Book... books) {
         bimp = new BookListImp(BookStoreCMD.books);
         int[] status = bimp.buy(books);
         return status;
@@ -101,8 +101,10 @@ public class BookStoreCMD {
         return books;
     }
 
-    public static void main(String[] args) throws Exception {
-        ArrayList<Book> bookal = new ArrayList();
+
+    
+    public static void menu() throws Exception{
+         ArrayList<Book> bookal = new ArrayList();
         double amount = 0.0;
         double sum = 0.0;
         int count = 1;
@@ -210,7 +212,11 @@ public class BookStoreCMD {
                     System.out.println();
                     break;
             }
-        }
+        } 
+    }
+    
+    public static void main(String[] args) throws Exception {
+        menu ();
 
     }
 
